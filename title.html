@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,35 +92,99 @@
             left: -16px;
         }
 
-        .stage-content {
-            padding: 20px;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
+        /* 添加图片放大效果 */
         .stage-image {
             width: 100%;
             height: 200px;
             object-fit: cover;
             border-radius: 8px;
             margin-bottom: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
         }
 
-        .stage-title {
-            color: #2c5530;
-            margin-bottom: 0.5rem;
+        .stage-image:hover {
+            transform: scale(1.05);
         }
 
-        .stage-description {
-            color: #666;
-            font-size: 0.95rem;
+        /* 添加卡片悬停效果 */
+        .stage-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
         }
 
-        .stage-day {
-            color: #4CAF50;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
+        .stage-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* 图片放大模态框 */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90vh;
+            border-radius: 8px;
+        }
+
+        /* 控制按钮 */
+        .controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 100;
+        }
+
+        .control-btn {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .control-btn:hover {
+            background: #45a049;
+        }
+
+        /* 进度指示器 */
+        .progress-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: #e0e0e0;
+            z-index: 100;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #4CAF50;
+            width: 0%;
+            transition: width 0.3s ease;
         }
 
         @media screen and (max-width: 600px) {
@@ -145,8 +208,11 @@
         }
     </style>
 </head>
-
 <body>
+    <div class="progress-indicator">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
     <div class="container">
         <header>
             <h1>植物生长周期</h1>
@@ -200,26 +266,96 @@
         </div>
     </div>
 
-    <script>
-        // 添加滚动动画效果
-        function checkScroll() {
-            const stages = document.querySelectorAll('.stage');
+    <div class="modal" id="imageModal">
+        <img src="" alt="" class="modal-content" id="modalImage">
+    </div>
 
+    <div class="controls">
+        <button class="control-btn" id="pauseBtn">暂停动画</button>
+        <button class="control-btn" id="resetBtn">重置查看</button>
+    </div>
+
+    <script>
+        // 滚动动画控制
+        let isAnimationPaused = false;
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
+        pauseBtn.addEventListener('click', () => {
+            isAnimationPaused = !isAnimationPaused;
+            pauseBtn.textContent = isAnimationPaused ? '继续动画' : '暂停动画';
+            
+            const stages = document.querySelectorAll('.stage');
+            stages.forEach(stage => {
+                if (isAnimationPaused) {
+                    stage.style.transition = 'none';
+                } else {
+                    stage.style.transition = 'all 0.5s ease';
+                    checkScroll();
+                }
+            });
+        });
+
+        resetBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const stages = document.querySelectorAll('.stage');
+            stages.forEach(stage => {
+                stage.classList.remove('visible');
+            });
+            setTimeout(checkScroll, 100);
+        });
+
+        // 图片放大功能
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        
+        document.querySelectorAll('.stage-image').forEach(img => {
+            img.addEventListener('click', () => {
+                modal.classList.add('active');
+                modalImg.src = img.src;
+            });
+        });
+
+        modal.addEventListener('click', () => {
+            modal.classList.remove('active');
+        });
+
+        // 进度条更新
+        function updateProgress() {
+            const windowHeight = window.innerHeight;
+            const documentHeight = document.documentElement.scrollHeight - windowHeight;
+            const scrolled = window.scrollY;
+            const progress = (scrolled / documentHeight) * 100;
+            document.getElementById('progressBar').style.width = `${progress}%`;
+        }
+
+        // 修改后的滚动检查函数
+        function checkScroll() {
+            if (isAnimationPaused) return;
+            
+            const stages = document.querySelectorAll('.stage');
             stages.forEach(stage => {
                 const stageTop = stage.getBoundingClientRect().top;
                 const windowHeight = window.innerHeight;
-
+                
                 if (stageTop < windowHeight * 0.8) {
                     stage.classList.add('visible');
                 }
             });
+            
+            updateProgress();
         }
 
-        // 页面加载时检查
-        window.addEventListener('load', checkScroll);
-        // 滚动时检查
-        window.addEventListener('scroll', checkScroll);
+        // 事件监听
+        window.addEventListener('load', () => {
+            checkScroll();
+            updateProgress();
+        });
+        
+        window.addEventListener('scroll', () => {
+            checkScroll();
+            updateProgress();
+        });
     </script>
 </body>
-
 </html>
