@@ -206,6 +206,67 @@
                 left: 0%;
             }
         }
+
+        /* 添加新的样式 */
+        .stage-details {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #ccc;
+        }
+
+        .detail-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detail-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .detail-list li::before {
+            content: '🌱';
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .care-tips {
+            background: #e8f5e9;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .care-tips h4 {
+            color: #2c5530;
+            margin-bottom: 0.5rem;
+        }
+
+        .temperature-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .temperature-bar {
+            flex: 1;
+            height: 8px;
+            background: #ddd;
+            border-radius: 4px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .temperature-fill {
+            position: absolute;
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #4CAF50);
+            width: var(--temp-width);
+            transition: width 0.3s ease;
+        }
     </style>
 </head>
 <body>
@@ -215,52 +276,204 @@
 
     <div class="container">
         <header>
-            <h1>植物生长周期</h1>
-            <p>探索植物从种子到成熟的神奇旅程</p>
+            <h1>植物生长周期详解</h1>
+            <p>深入了解植物从种子萌发到开花结果的完整生长过程</p>
         </header>
 
         <div class="timeline">
             <div class="stage left">
                 <div class="stage-content">
-                    <img src="https://source.unsplash.com/featured/?seed" alt="种子阶段" class="stage-image">
-                    <div class="stage-day">第 1-3 天</div>
-                    <h3 class="stage-title">种子发芽阶段</h3>
+                    <img src="https://source.unsplash.com/featured/?seed" alt="种子准备阶段" class="stage-image">
+                    <div class="stage-day">第 1-2 天</div>
+                    <h3 class="stage-title">种子准备阶段</h3>
                     <p class="stage-description">
-                        种子吸收水分后开始萌发，幼根突破种皮向下生长，为未来的生长打下基础。
+                        种子进入适宜环境后开始吸水膨胀，激活体内休眠的酶类系统。
                     </p>
+                    <div class="stage-details">
+                        <ul class="detail-list">
+                            <li>种子吸水速度加快</li>
+                            <li>种皮软化</li>
+                            <li>酶系统被激活</li>
+                        </ul>
+                        <div class="care-tips">
+                            <h4>养护要点</h4>
+                            <p>保持适宜温度和湿度，避免积水</p>
+                            <div class="temperature-indicator">
+                                <span>适宜温度：20-25℃</span>
+                                <div class="temperature-bar">
+                                    <div class="temperature-fill" style="--temp-width: 60%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="stage right">
                 <div class="stage-content">
-                    <img src="https://source.unsplash.com/featured/?sprout" alt="幼苗阶段" class="stage-image">
-                    <div class="stage-day">第 4-7 天</div>
-                    <h3 class="stage-title">幼苗生长阶段</h3>
+                    <img src="https://source.unsplash.com/featured/?germination" alt="初期发芽阶段" class="stage-image">
+                    <div class="stage-day">第 3-4 天</div>
+                    <h3 class="stage-title">初期发芽阶段</h3>
                     <p class="stage-description">
-                        幼芽突破土壤表面，展开第一片叶子（子叶），开始进行光合作用。
+                        胚根突破种皮，向下生长，开始吸收水分和矿物质。
                     </p>
+                    <div class="stage-details">
+                        <ul class="detail-list">
+                            <li>胚根突破种皮</li>
+                            <li>根毛开始发育</li>
+                            <li>种子储存物质开始转化</li>
+                        </ul>
+                        <div class="care-tips">
+                            <h4>养护要点</h4>
+                            <p>保持土壤湿润，避免阳光直射</p>
+                            <div class="temperature-indicator">
+                                <span>土壤湿度：60-70%</span>
+                                <div class="temperature-bar">
+                                    <div class="temperature-fill" style="--temp-width: 65%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="stage left">
                 <div class="stage-content">
-                    <img src="https://source.unsplash.com/featured/?plant,growing" alt="生长阶段" class="stage-image">
-                    <div class="stage-day">第 8-14 天</div>
-                    <h3 class="stage-title">茎叶发育阶段</h3>
+                    <img src="https://source.unsplash.com/featured/?seedling" alt="幼苗出土阶段" class="stage-image">
+                    <div class="stage-day">第 5-7 天</div>
+                    <h3 class="stage-title">幼苗出土阶段</h3>
                     <p class="stage-description">
-                        真叶开始生长，茎干逐渐加粗，根系不断延伸扩展。
+                        胚轴带动子叶突破土壤表面，幼苗开始进行光合作用。
                     </p>
+                    <div class="stage-details">
+                        <ul class="detail-list">
+                            <li>胚轴伸长弯曲</li>
+                            <li>子叶展开变绿</li>
+                            <li>开始光合作用</li>
+                        </ul>
+                        <div class="care-tips">
+                            <h4>养护要点</h4>
+                            <p>适当补光，保持通风</p>
+                            <div class="temperature-indicator">
+                                <span>光照强度：中等</span>
+                                <div class="temperature-bar">
+                                    <div class="temperature-fill" style="--temp-width: 50%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="stage right">
                 <div class="stage-content">
-                    <img src="https://source.unsplash.com/featured/?flower,bloom" alt="开花阶段" class="stage-image">
-                    <div class="stage-day">第 15-30 天</div>
-                    <h3 class="stage-title">开花结果阶段</h3>
+                    <img src="https://source.unsplash.com/featured/?plant,leaf" alt="真叶生长阶段" class="stage-image">
+                    <div class="stage-day">第 8-14 天</div>
+                    <h3 class="stage-title">真叶生长阶段</h3>
                     <p class="stage-description">
-                        植物进入成熟期，开始开花，随后结出果实，完成生命周期。
+                        第一片真叶展开，植物开始快速生长。
                     </p>
+                    <div class="stage-details">
+                        <ul class="detail-list">
+                            <li>真叶展开</li>
+                            <li>茎干加粗</li>
+                            <li>根系扩展</li>
+                        </ul>
+                        <div class="care-tips">
+                            <h4>养护要点</h4>
+                            <p>适时补充肥料，控制浇水量</p>
+                            <div class="temperature-indicator">
+                                <span>肥料浓度：稀释500倍</span>
+                                <div class="temperature-bar">
+                                    <div class="temperature-fill" style="--temp-width: 40%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage left">
+                <div class="stage-content">
+                    <img src="https://source.unsplash.com/featured/?plant,growth" alt="茎叶旺盛期" class="stage-image">
+                    <div class="stage-day">第 15-21 天</div>
+                    <h3 class="stage-title">茎叶旺盛期</h3>
+                    <p class="stage-description">
+                        植株快速生长，叶片数量增多，开始形成完整冠幅。
+                    </p>
+                    <div class="stage-details">
+                        <ul class="detail-list">
+                            <li>叶片数量增加</li>
+                            <li>分枝开始</li>
+                            <li>冠幅扩大</li>
+                        </ul>
+                        <div class="care-tips">
+                            <h4>养护要点</h4>
+                            <p>注意通风，预防病虫害</p>
+                            <div class="temperature-indicator">
+                                <span>通风次数：每日2-3次</span>
+                                <div class="temperature-bar">
+                                    <div class="temperature-fill" style="--temp-width: 70%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage right">
+                <div class="stage-content">
+                    <img src="https://source.unsplash.com/featured/?flower,bud" alt="花芽分化期" class="stage-image">
+                    <div class="stage-day">第 22-25 天</div>
+                    <h3 class="stage-title">花芽分化期</h3>
+                    <p class="stage-description">
+                        植物进入生殖生长阶段，开始形成花芽。
+                    </p>
+                    <div class="stage-details">
+                        <ul class="detail-list">
+                            <li>花芽形成</li>
+                            <li>营养生长减缓</li>
+                            <li>植株强健</li>
+                        </ul>
+                        <div class="care-tips">
+                            <h4>养护要点</h4>
+                            <p>控制水分，增加磷钾肥</p>
+                            <div class="temperature-indicator">
+                                <span>磷钾比例：1:1</span>
+                                <div class="temperature-bar">
+                                    <div class="temperature-fill" style="--temp-width: 55%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stage left">
+                <div class="stage-content">
+                    <img src="https://source.unsplash.com/featured/?flower,bloom" alt="开花期" class="stage-image">
+                    <div class="stage-day">第 26-30 天</div>
+                    <h3 class="stage-title">开花期</h3>
+                    <p class="stage-description">
+                        花蕾绽放，进入开花盛期。
+                    </p>
+                    <div class="stage-details">
+                        <ul class="detail-list">
+                            <li>花朵绽放</li>
+                            <li>传粉授粉</li>
+                            <li>果实开始发育</li>
+                        </ul>
+                        <div class="care-tips">
+                            <h4>养护要点</h4>
+                            <p>维持稳定环境，避免剧烈变化</p>
+                            <div class="temperature-indicator">
+                                <span>昼夜温差：5-8℃</span>
+                                <div class="temperature-bar">
+                                    <div class="temperature-fill" style="--temp-width: 80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -355,6 +568,21 @@
         window.addEventListener('scroll', () => {
             checkScroll();
             updateProgress();
+        });
+
+        // 添加温度条动画效果
+        document.querySelectorAll('.temperature-bar').forEach(bar => {
+            const fill = bar.querySelector('.temperature-fill');
+            
+            bar.addEventListener('mouseenter', () => {
+                const currentWidth = fill.style.getPropertyValue('--temp-width');
+                fill.style.setProperty('--temp-width', `${parseInt(currentWidth) + 10}%`);
+            });
+            
+            bar.addEventListener('mouseleave', () => {
+                const currentWidth = fill.style.getPropertyValue('--temp-width');
+                fill.style.setProperty('--temp-width', `${parseInt(currentWidth) - 10}%`);
+            });
         });
     </script>
 </body>
